@@ -2,23 +2,22 @@ import { useState } from 'react';
 import './App.css';
 import Header from './components/header/Header';
 import SearchBox from './components/searchBox/SearchBox';
+import ResultContainer from './components/resultsContainer/ResultContainer';
+const name = require('@rstacruz/startup-name-generator');
 
 function App() {
-
-  const[headerExpanded, setHeaderExpanded] = useState(true)
+  const[headerExpanded, setHeaderExpanded] = useState(true);
+  const[suggestedNames, setSuggestedNames] = useState([]);
 
   const handleInputChange = (inputText) => {
-    console.log("input text", inputText)
     setHeaderExpanded(!inputText)
+    setSuggestedNames(inputText ? name(inputText) : [])
   }
   return (
     <div className="App">
-      <div>
         <Header headerExpanded={headerExpanded}/>
-      </div>
-      <div>
         <SearchBox onInputChange={handleInputChange}/>
-      </div>
+        <ResultContainer suggestedNames={suggestedNames}/>
     </div>
   );
 }
